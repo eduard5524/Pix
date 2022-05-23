@@ -1,0 +1,1887 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "BarcodePro Web API",
+    "description": "[BarcodePro Web API](https://neodynamic.com/products/barcode/docker) generates most popular Linear (1D), Postal, Stacked, Component Composite & 2D Barcode Symbologies in well known raster image and document formats like PNG, JPG, PCX, SVG, PDF, and EPS.",
+    "contact": {
+      "name": "Neodynamic",
+      "url": "https://neodynamic.com/support",
+      "email": ""
+    },
+    "license": {
+      "name": "Use under Neodynamic EULA",
+      "url": "https://neodynamic.com/eula"
+    },
+    "version": "v2"
+  },
+  "paths": {
+    "/BarcodeGenerator": {
+      "post": {
+        "tags": [
+          "BarcodeGenerator"
+        ],
+        "summary": "Processes the Barcode JSON object and generates the output in the image or document format specified to the Accept header.",
+        "requestBody": {
+          "description": "The Barcode JSON object to be processed.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Barcode"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Barcode"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Barcode"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the image or document for the specified Barcode JSON object.",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/vnd.zbrush.pcx": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/postscript": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/svg+xml": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "If an error occurs during the Barcode JSON object processing.",
+            "content": {
+              "image/png": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "image/jpeg": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/pdf": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "image/vnd.zbrush.pcx": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/postscript": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "image/svg+xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Barcode": {
+        "required": [
+          "code",
+          "symbology"
+        ],
+        "type": "object",
+        "properties": {
+          "symbology": {
+            "enum": [
+              "Codabar",
+              "Code11",
+              "Code16k",
+              "Code39",
+              "Code93",
+              "Code128",
+              "DataMatrix",
+              "Ean8",
+              "Ean13",
+              "Industrial2of5",
+              "Interleaved2of5",
+              "Isbn",
+              "Msi",
+              "Pdf417",
+              "Planet",
+              "Postnet",
+              "UccEan128",
+              "UpcA",
+              "UpcE",
+              "UspsOneCode4CB",
+              "RoyalMail",
+              "AustraliaPost",
+              "RoyalTpgPostKix",
+              "Sscc18",
+              "Pzn",
+              "DeutschePostLeitcode",
+              "DeutschePostIdentcode",
+              "UspsTrayLabel",
+              "UspsSackLabel",
+              "EanVelocity",
+              "SingaporePost",
+              "Jan8",
+              "Jan13",
+              "SwissPostParcel",
+              "Opc",
+              "Ean99",
+              "Itf14",
+              "Scc14",
+              "Issn",
+              "Ismn",
+              "NumlyNumber",
+              "QRCode",
+              "UspsFim",
+              "UspsHorizontalBars",
+              "Telepen",
+              "Pharmacode",
+              "Semacode",
+              "Code32",
+              "UspsPicUccEan128",
+              "FedExGround96",
+              "AztecCode",
+              "CompactPdf417",
+              "MacroPdf417",
+              "MicroPdf417",
+              "VicsBol",
+              "VicsScacPro",
+              "ItalianPost25",
+              "Isbt128",
+              "HibcLic39",
+              "HibcLic128",
+              "HibcPas39",
+              "HibcPas128",
+              "UspsIntelligentMail",
+              "EanUpcAddOn2",
+              "EanUpcAddOn5",
+              "UspsPicCode128",
+              "GS1DataBarOmnidirectional",
+              "GS1DataBar14",
+              "Rss14",
+              "GS1DataBarTruncated",
+              "GS1DataBar14Truncated",
+              "Rss14Truncated",
+              "GS1DataBarStacked",
+              "GS1DataBar14Stacked",
+              "Rss14Stacked",
+              "GS1DataBarStackedOmnidirectional",
+              "GS1DataBar14StackedOmnidirectional",
+              "Rss14StackedOmnidirectional",
+              "GS1DataBarLimited",
+              "RssLimited",
+              "GS1DataBarExpanded",
+              "RssExpanded",
+              "GS1DataBarExpandedStacked",
+              "RssExpandedStacked",
+              "GS1128",
+              "MaxiCode",
+              "MicroQRCode",
+              "Matrix2of5",
+              "DanishPostal39",
+              "FrenchPostal39AR",
+              "IATA2of5",
+              "AustraliaPostDomesticEParcelBarcode",
+              "UspsIntelligentMailContainerBarcode",
+              "KodakPatchCode",
+              "GS1DataMatrix",
+              "Ean13CCA",
+              "Ean13CCB",
+              "Ean8CCA",
+              "Ean8CCB",
+              "UpcACCA",
+              "UpcACCB",
+              "UpcECCA",
+              "UpcECCB",
+              "UccEan128CCA",
+              "UccEan128CCB",
+              "UccEan128CCC",
+              "GS1128CCA",
+              "GS1128CCB",
+              "GS1128CCC",
+              "GS1DataBarOmnidirectionalCCA",
+              "GS1DataBar14CCA",
+              "Rss14CCA",
+              "GS1DataBarOmnidirectionalCCB",
+              "GS1DataBar14CCB",
+              "Rss14CCB",
+              "GS1DataBarTruncatedCCA",
+              "GS1DataBar14TruncatedCCA",
+              "Rss14TruncatedCCA",
+              "GS1DataBarTruncatedCCB",
+              "GS1DataBar14TruncatedCCB",
+              "Rss14TruncatedCCB",
+              "GS1DataBarLimitedCCA",
+              "RssLimitedCCA",
+              "GS1DataBarLimitedCCB",
+              "RssLimitedCCB",
+              "GS1DataBarStackedCCA",
+              "GS1DataBar14StackedCCA",
+              "Rss14StackedCCA",
+              "GS1DataBarStackedCCB",
+              "GS1DataBar14StackedCCB",
+              "Rss14StackedCCB",
+              "GS1DataBarStackedOmnidirectionalCCA",
+              "GS1DataBar14StackedOmnidirectionalCCA",
+              "Rss14StackedOmnidirectionalCCA",
+              "GS1DataBarStackedOmnidirectionalCCB",
+              "GS1DataBar14StackedOmnidirectionalCCB",
+              "Rss14StackedOmnidirectionalCCB",
+              "GS1DataBarExpandedCCA",
+              "RssExpandedCCA",
+              "GS1DataBarExpandedCCB",
+              "RssExpandedCCB",
+              "GS1DataBarExpandedStackedCCA",
+              "RssExpandedStackedCCA",
+              "GS1DataBarExpandedStackedCCB",
+              "RssExpandedStackedCCB",
+              "Ean14",
+              "Dun14Itf",
+              "Dun14Ean",
+              "GS1QRCode",
+              "Ppn",
+              "IFAsecurPharm",
+              "DhlAwb",
+              "HibcLicDataMatrix",
+              "HibcLicQRCode",
+              "HibcLicAztecCode",
+              "HibcPasDataMatrix",
+              "HibcPasQRCode",
+              "HibcPasAztecCode",
+              "Isbt128DataMatrix",
+              "DeutschePostResponsePlusPostMatrix",
+              "DeutschePostBzl",
+              "UspsIntelligentMailPackageBarcode",
+              "HanXinCode",
+              "JapanPost",
+              "KoreaPost",
+              "DataLogic2of5",
+              "MailmarkCMDM",
+              "Mailmark4StateC",
+              "Mailmark4StateL",
+              "DotCode",
+              "GS1AztecCode",
+              "SwissQRCode",
+              "Pharmacode2D",
+              "ChannelCode",
+              "JABCode",
+              "Plessey",
+              "EPCQRCode",
+              "Code49",
+              "CodablockF",
+              "Tlc39",
+              "HibcLicCodablockF",
+              "HibcPasCodablockF",
+              "TriOptic",
+              "DINSpecQRCode",
+              "DINSpecDataMatrix",
+              "RectMicroQRCode",
+              "GS1RectMicroQRCode",
+              "DPDCode",
+              "DAFT"
+            ],
+            "type": "string",
+            "description": "Gets or sets the barcode symbology to generate. Further info at https://neodynamic.com/barcodes",
+            "example": "Code128"
+          },
+          "code": {
+            "type": "string",
+            "description": "Gets or sets the value to encode.",
+            "example": "12345"
+          },
+          "isCodeBase64": {
+            "type": "boolean",
+            "description": "Whether the specified value to encode in the `code` property is in Base64 format. Useful for encoding non-readable/printable chars.",
+            "example": false
+          },
+          "codeBase64EncodingName": {
+            "type": "string",
+            "description": "The Encoding or CodePage Identifier/Name of the value to encode in the `code` property when `isCodeBase64` is enabled. Default is ISO-8859-1. Valid values are listed at https://github.com/neodynamic/Barcode-Pro-Web-API-Docker/blob/master/README.md#supported-codepagesencodings",
+            "nullable": true,
+            "example": "ISO-8859-1"
+          },
+          "barcodeUnit": {
+            "enum": [
+              "Inch",
+              "Millimeter",
+              "Centimeter",
+              "Mils"
+            ],
+            "type": "string",
+            "description": "Gets or sets the unit of measure for the barcode dimensions.",
+            "example": "Inch"
+          },
+          "dpi": {
+            "type": "number",
+            "description": "Gets or sets the DPI (dots per inch) or Resolution of the output barcode image.",
+            "format": "double",
+            "example": 96
+          },
+          "height": {
+            "type": "number",
+            "description": "Gets or sets the height of the barcode image if `autoSize` property is not enabled. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 1
+          },
+          "width": {
+            "type": "number",
+            "description": "Gets or sets the width of the barcode image if `autoSize` property is not enabled. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 2
+          },
+          "addChecksum": {
+            "type": "boolean",
+            "description": "Gets or sets whether checksum must be generated and attached to the value to encode.",
+            "example": true
+          },
+          "antiAlias": {
+            "type": "boolean",
+            "description": "Gets or sets whether AntiAlias effect must be applied to all the texts in the barcode image.",
+            "example": true
+          },
+          "artBarImagePattern": {
+            "type": "string",
+            "description": "Gets or sets the image file (path or Base64 string) that will be used as a pattern to fill all the bars that compose the barcode symbol.",
+            "nullable": true,
+            "example": ""
+          },
+          "artLogoImage": {
+            "type": "string",
+            "description": "Gets or sets the logo image file (path or Base64 string) that will be used to stamp it on top or bottom of the barcode symbol. Note: this feature is not available when exporting the barcode symbol to EPS format.",
+            "nullable": true,
+            "example": ""
+          },
+          "artLogoImageOpacity": {
+            "type": "integer",
+            "description": "Gets or sets the opacity [from 1 to 100 (fully opaque)] of the image logo file.",
+            "format": "int32",
+            "example": 100
+          },
+          "artLogoImagePercentage": {
+            "type": "integer",
+            "description": "Gets or sets the percentage used to resize the logo image based on the barcode symbol size.",
+            "format": "int32",
+            "example": 20
+          },
+          "artLogoImagePosition": {
+            "enum": [
+              "Top",
+              "Bottom"
+            ],
+            "type": "string",
+            "description": "Gets or sets the position of the logo image file on the barcode symbol. Default is Top.",
+            "example": "Top"
+          },
+          "autoSize": {
+            "type": "boolean",
+            "description": "Gets or sets whether the barcode image is automatically resized to display its entire contents.",
+            "example": true
+          },
+          "aztecCodeByteEncodingName": {
+            "type": "string",
+            "description": "Gets or sets the Encoding Name (Code Page) to be used for Aztec Code in Byte Compaction mode.",
+            "nullable": true,
+            "example": "ISO-8859-1"
+          },
+          "aztecCodeErrorCorrection": {
+            "type": "integer",
+            "description": "Gets or sets the Error Correction Percentage to apply for Aztec Code symbology.",
+            "format": "int32",
+            "example": 23
+          },
+          "aztecCodeFormat": {
+            "enum": [
+              "Auto",
+              "C15X15Compact",
+              "C19X19",
+              "C19X19Compact",
+              "C23X23",
+              "C23X23Compact",
+              "C27X27",
+              "C27X27Compact",
+              "C31X31",
+              "C37X37",
+              "C41X41",
+              "C45X45",
+              "C49X49",
+              "C53X53",
+              "C57X57",
+              "C61X61",
+              "C67X67",
+              "C71X71",
+              "C75X75",
+              "C79X79",
+              "C83X83",
+              "C87X87",
+              "C91X91",
+              "C95X95",
+              "C101X101",
+              "C105X105",
+              "C109X109",
+              "C113X113",
+              "C117X117",
+              "C121X121",
+              "C125X125",
+              "C131X131",
+              "C135X135",
+              "C139X139",
+              "C143X143",
+              "C147X147",
+              "C151X151"
+            ],
+            "type": "string",
+            "description": "Gets or sets the Aztec Code Format to use on that symbology.",
+            "example": "Auto"
+          },
+          "aztecCodeModuleSize": {
+            "type": "number",
+            "description": "Gets or sets the module size. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.0417
+          },
+          "aztecCodeProcessTilde": {
+            "type": "boolean",
+            "description": "Gets or sets whether tilde character should be processed when Aztec Code is being generated.",
+            "example": false
+          },
+          "aztecCodeRune": {
+            "type": "integer",
+            "description": "Gets or sets the Aztec Code Rune value. It must be a value from 0 to 255 and is available for Aztec Code Compact Format only.",
+            "format": "int32",
+            "example": 0
+          },
+          "backColor": {
+            "type": "string",
+            "description": "Gets or sets the background color in hex notation.",
+            "nullable": true,
+            "example": "#fff"
+          },
+          "barcodePaddingBottom": {
+            "type": "number",
+            "description": "Gets or sets the bottom extra space inside the container's border. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0
+          },
+          "barcodePaddingLeft": {
+            "type": "number",
+            "description": "Gets or sets the left extra space inside the container's border. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0
+          },
+          "barcodePaddingRight": {
+            "type": "number",
+            "description": "Gets or sets the right extra space inside the container's border. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0
+          },
+          "barcodePaddingTop": {
+            "type": "number",
+            "description": "Gets or sets the top extra space inside the container's border. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0
+          },
+          "barColor": {
+            "type": "string",
+            "description": "Gets or sets the bars' color of the barcode in hex notation.",
+            "nullable": true,
+            "example": "#000"
+          },
+          "barHeight": {
+            "type": "number",
+            "description": "Gets or sets the bars' height of the barcode. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 1
+          },
+          "barRatio": {
+            "type": "number",
+            "description": "Gets or sets the wide bars' width compared to the narrow bars' width. In barcode terminology this is called N value.",
+            "format": "double",
+            "example": 2
+          },
+          "barWidth": {
+            "type": "number",
+            "description": "Gets or sets the narrow bars' width of the barcode. In barcode terminology this is called X value. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.0104
+          },
+          "barWidthAdjustment": {
+            "type": "number",
+            "description": "Gets or sets the Bar Width Adjustment.",
+            "format": "double",
+            "example": 0
+          },
+          "bearerBarStyle": {
+            "enum": [
+              "None",
+              "Frame",
+              "HorizontalRules"
+            ],
+            "type": "string",
+            "description": "Gets or set the bearer bars' type that must be drawn with the barcode image. Bearer bar is only available for 2 of 5, Code 128 and UCC.EAN 128 barcodes.",
+            "example": "None"
+          },
+          "bearerBarWidth": {
+            "type": "number",
+            "description": "Gets or sets the bearer bars' width. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.05
+          },
+          "borderColor": {
+            "type": "string",
+            "description": "Gets or sets the barcode border's colorin hex notation.",
+            "nullable": true,
+            "example": "#000"
+          },
+          "borderRadius": {
+            "type": "number",
+            "description": "Gets or sets the barcode border's radius. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0
+          },
+          "borderWidth": {
+            "type": "number",
+            "description": "Gets or sets the barcode border's width. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0
+          },
+          "bottomMargin": {
+            "type": "number",
+            "description": "Gets or sets the height of the margin below the barcode bars. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0
+          },
+          "channelCode": {
+            "type": "integer",
+            "description": "Gets or sets the Channel Code. Its value must be from 3 up to 8. Each channel code supports its own range of values: Channel 3 [0-26], Channel 4 [0-292], Channel 5 [0-3493], Channel 6 [0-44072], Channel 7 [0-576688], and Channel 8 [0-7742862]",
+            "format": "int32",
+            "example": 8
+          },
+          "codabarStartChar": {
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "type": "string",
+            "description": "Gets or sets the start character for Codabar symbology. Possible values are: A, B, C or D.",
+            "example": "A"
+          },
+          "codabarStopChar": {
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "type": "string",
+            "description": "Gets or sets the stop character for Codabar symbology. Possible values are: A, B, C or D.",
+            "example": "A"
+          },
+          "code11TwoDigitsChecksum": {
+            "type": "boolean",
+            "description": "Gets or sets whether Code 11 two digits checksum must be calculated and encoded.",
+            "example": false
+          },
+          "code128CharSet": {
+            "enum": [
+              "Auto",
+              "A",
+              "B",
+              "C"
+            ],
+            "type": "string",
+            "description": "Gets or sets the characters set to use in the Code 128 symbology. Possible values are: Auto, A, B or C.",
+            "example": "Auto"
+          },
+          "code16kMode": {
+            "enum": [
+              "Mode0",
+              "Mode1",
+              "Mode2"
+            ],
+            "type": "string",
+            "description": "Gets or sets the mode to use for Code16k symbology. Modes supported are: Mode 0, 1, and 2.",
+            "example": "Mode0"
+          },
+          "code39FullAsciiMode": {
+            "type": "boolean",
+            "description": "Gets or sets whether the extended versions for Code 39 symbologies must be used.",
+            "example": true
+          },
+          "code93FullAsciiMode": {
+            "type": "boolean",
+            "description": "Gets or sets whether the extended versions for Code 93 symbologies must be used.",
+            "example": true
+          },
+          "codeAlignment": {
+            "enum": [
+              "AboveCenter",
+              "AboveLeft",
+              "AboveRight",
+              "AboveJustify",
+              "BelowCenter",
+              "BelowLeft",
+              "BelowRight",
+              "BelowJustify"
+            ],
+            "type": "string",
+            "description": "Gets or sets the text alignment for `code` and `humanReadableText` properties.",
+            "example": "BelowCenter"
+          },
+          "codeFormatPattern": {
+            "type": "string",
+            "description": "Gets or sets the string pattern to format the `code` property. The result of the format process is the one which will be encoded!",
+            "nullable": true,
+            "example": ""
+          },
+          "dataMatrixByteEncodingName": {
+            "type": "string",
+            "description": "Gets or sets the Encoding Name (Code Page) to be used for DataMatrix in Byte Compaction mode.",
+            "nullable": true,
+            "example": "ISO-8859-1"
+          },
+          "dataMatrixEncoding": {
+            "enum": [
+              "Auto",
+              "Ascii",
+              "C40",
+              "Text",
+              "Base256",
+              "AnsiX12",
+              "EDIFACT"
+            ],
+            "type": "string",
+            "description": "Gets or sets the DataMatrix Encoding to use on that symbology.",
+            "example": "Auto"
+          },
+          "dataMatrixFileId": {
+            "type": "string",
+            "description": "Gets or sets the File ID of the Data Matrix symbol. Its value must be a sequence of codewords (Each codeword value must be a number between 001 and 254) and must be the same for all data segments.",
+            "nullable": true,
+            "example": "001001"
+          },
+          "dataMatrixFormat": {
+            "enum": [
+              "Auto",
+              "AutoDMRE",
+              "C10X10",
+              "C12X12",
+              "C8X18",
+              "C14X14",
+              "C8X32",
+              "C16X16",
+              "C12X26",
+              "C18X18",
+              "C20X20",
+              "C12X36",
+              "C22X22",
+              "C16X36",
+              "C24X24",
+              "C26X26",
+              "C16X48",
+              "C32X32",
+              "C36X36",
+              "C40X40",
+              "C44X44",
+              "C48X48",
+              "C52X52",
+              "C64X64",
+              "C72X72",
+              "C80X80",
+              "C88X88",
+              "C96X96",
+              "C104X104",
+              "C120X120",
+              "C132X132",
+              "C144X144",
+              "DMRE8X48",
+              "DMRE8X64",
+              "DMRE12X64",
+              "DMRE24X32",
+              "DMRE26X32",
+              "DMRE24X36",
+              "DMRE16X64",
+              "DMRE26X40",
+              "DMRE24X48",
+              "DMRE26X48",
+              "DMRE24X64",
+              "DMRE26X64"
+            ],
+            "type": "string",
+            "description": "Gets or sets the DataMatrix Format to use on that symbology.",
+            "example": "Auto"
+          },
+          "dataMatrixIncludeRectFormatsInAutoMode": {
+            "type": "boolean",
+            "description": "Gets or sets whether to consider Rectangular DataMatrix Formats when DataMatrixFormat is set to Auto.",
+            "example": false
+          },
+          "dataMatrixModuleSize": {
+            "type": "number",
+            "description": "Gets or sets the module size. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.0417
+          },
+          "dataMatrixProcessTilde": {
+            "type": "boolean",
+            "description": "Gets or sets whether tilde character should be processed when DataMatrix code is being generated.",
+            "example": false
+          },
+          "dataMatrixSymbolCount": {
+            "type": "integer",
+            "description": "Gets or sets the number of Data Matrix symbols. Its value must be less than or equal to 16.",
+            "format": "int32",
+            "example": 1
+          },
+          "dataMatrixSymbolIndex": {
+            "type": "integer",
+            "description": "Gets or sets the Index for a Data Matrix symbol. Its value must be 1 up to 16 and must be less than or equal to the value in `dataMatrixSegmentCount` property.",
+            "format": "int32",
+            "example": 1
+          },
+          "displayChecksum": {
+            "type": "boolean",
+            "description": "Gets or sets whether checksum value must be displayed after the value to encode in the barcode image.",
+            "example": true
+          },
+          "displayCode": {
+            "type": "boolean",
+            "description": "Gets or sets whether the value to encode must be displayed in the barcode image.",
+            "example": true
+          },
+          "displayLightMarginIndicator": {
+            "type": "boolean",
+            "description": "Gets or sets whether light margin indicators must be displayed in the barcode image. Only available for EAN/UPC Symbologies.",
+            "example": true
+          },
+          "displayStartStopChar": {
+            "type": "boolean",
+            "description": "Gets or sets whether start and stop characters must be displayed in the barcode image.",
+            "example": true
+          },
+          "dotCodeAspectRatio": {
+            "type": "string",
+            "description": "Gets or sets the Columns (width) to Rows (height) Aspect Ratio for DotCode symbology. Aspect Ratio must be specified as C:R where C and R are integers e.g. 3:2",
+            "nullable": true,
+            "example": ""
+          },
+          "dotCodeColumns": {
+            "type": "integer",
+            "description": "Gets or sets the number of columns to use for DotCode symbology.",
+            "format": "int32",
+            "example": 0
+          },
+          "dotCodeModuleShape": {
+            "enum": [
+              "Circle",
+              "Square"
+            ],
+            "type": "string",
+            "description": "Gets or sets the shape of the modules that make the DotCode barcode symbol."
+          },
+          "dotCodeModuleSize": {
+            "type": "number",
+            "description": "Gets or sets the module size. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.0417
+          },
+          "dotCodeProcessTilde": {
+            "type": "boolean",
+            "description": "Gets or sets whether tilde character should be processed when DotCode is being generated.",
+            "example": false
+          },
+          "dotCodeRows": {
+            "type": "integer",
+            "description": "Gets or sets the number of rows to use for DotCode symbology.",
+            "format": "int32",
+            "example": 0
+          },
+          "eanUpcAutoBWAfor1278DigitsEnabled": {
+            "type": "boolean",
+            "description": "Gets or sets whether the recommended Bar Width Adjustment for digits 1, 2, 7 and 8 by GS1 spec is enabled. The GS1 spec states that for digits 1, 2, 7 or 8; the bars (dark bars) and spaces (light bars) are reduced or enlarged by one-thirteenth of a module (BarWidth) to provide a uniform distribution of bar width tolerances and thus improve scanning reliability.",
+            "example": false
+          },
+          "eanUpcMagnificationFactor": {
+            "type": "number",
+            "description": "Gets or sets the Magnification Factor for EAN/UPC barcodes. EAN/UPC barcodes can be printed at various densities to accommodate a variety of printing and scanning processes. The significant dimensional parameter is X, the ideal width of a single module element. In Barcode Professional, this is specified with `barWidth` property. For EAN/UPC symbols, the X-dimension at nominal size is 0.33 millimeter (= 0.013 inch). The \"magnification factor\" specifies the size of the barcode symbol as a whole by taking the nominal size as the 1.0 (100%) value.",
+            "format": "float",
+            "example": 0
+          },
+          "eanUpcSupplement": {
+            "enum": [
+              "None",
+              "Digits2",
+              "Digits5"
+            ],
+            "type": "string",
+            "description": "Gets or sets the supplement type to use with EAN and UPC symbologies.",
+            "example": "None"
+          },
+          "eanUpcSupplementCode": {
+            "type": "string",
+            "description": "Gets or sets the supplement value for EAN and UPC symbologies.",
+            "nullable": true,
+            "example": "00000"
+          },
+          "eanUpcSupplementSeparation": {
+            "type": "number",
+            "description": "Gets or sets the gap separation between the EAN/UPC barcode and its supplement. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.15
+          },
+          "eanUpcSupplementTopMargin": {
+            "type": "number",
+            "description": "Gets or sets the height of the margin above the EAN/UPC supplement bars. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.15
+          },
+          "fitProportional": {
+            "type": "boolean",
+            "description": "Gets or sets whether the barcode symbol is created by automatically calculating the bars or modules sizes so it fits the available area (Width - Height) proportinaly.",
+            "example": false
+          },
+          "fontBold": {
+            "type": "boolean",
+            "description": "Gets or sets whether the Font object for `code` and `humanReadableText` properties must be bold.",
+            "example": false
+          },
+          "fontItalic": {
+            "type": "boolean",
+            "description": "Gets or sets whether the Font object for `code` and `humanReadableText` properties must be italic.",
+            "example": false
+          },
+          "fontName": {
+            "type": "string",
+            "description": "Gets or sets the Font name for using when rendering `code` and `humanReadableText` properties.",
+            "nullable": true,
+            "example": "Arial"
+          },
+          "fontSizeInPoints": {
+            "type": "number",
+            "description": "Gets or sets the Font size in points unit (1/72 inch) when rendering `code` and `humanReadableText` properties.",
+            "format": "float"
+          },
+          "fontStrikeout": {
+            "type": "boolean",
+            "description": "Gets or sets whether the Font object for `code` and `humanReadableText` properties specifies a horizontal line through it.",
+            "example": false
+          },
+          "fontUnderline": {
+            "type": "boolean",
+            "description": "Gets or sets whether the Font object for `code` and `humanReadableText` properties is underlined.",
+            "example": false
+          },
+          "foreColor": {
+            "type": "string",
+            "description": "Gets or sets the text color for using when rendering `code` and `humanReadableText` properties.",
+            "nullable": true,
+            "example": "#000"
+          },
+          "gS1DataStrictValidation": {
+            "type": "boolean",
+            "description": "Gets or sets whether to strictly validate the specified GS1 Element Strings i.e. Application Identifier plus Data Field based on GS1 General Specifications rules.",
+            "example": false
+          },
+          "guardBar": {
+            "type": "boolean",
+            "description": "Gets or sets whether EAN/UPC guard bars must be drawn.",
+            "example": true
+          },
+          "guardBarHeight": {
+            "type": "number",
+            "description": "Gets or sets the guard bars' height. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 1.1
+          },
+          "hanXinCodeByteEncodingName": {
+            "type": "string",
+            "description": "Gets or sets the Encoding Name (Code Page) to be used for Han Xin Code Binary Byte Encoding mode.",
+            "nullable": true,
+            "example": "ISO-8859-1"
+          },
+          "hanXinCodeEncoding": {
+            "enum": [
+              "Auto",
+              "Numeric",
+              "Text",
+              "BinaryByte",
+              "ChineseReg1",
+              "ChineseReg2",
+              "GB18030Bytes2",
+              "GB18030Bytes4"
+            ],
+            "type": "string",
+            "description": "Gets or sets the Han Xin Code Encoding to use on that symbology.",
+            "example": "Auto"
+          },
+          "hanXinCodeErrorCorrectionLevel": {
+            "enum": [
+              "L1",
+              "L2",
+              "L3",
+              "L4"
+            ],
+            "type": "string",
+            "description": "Gets or sets the Error Correction Level to apply for Han Xin Code symbology.",
+            "example": "L1"
+          },
+          "hanXinCodeModuleSize": {
+            "type": "number",
+            "description": "Gets or sets the module size. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.0417
+          },
+          "hanXinCodeProcessTilde": {
+            "type": "boolean",
+            "description": "Gets or sets whether tilde character should be processed when Han Xin Code is being generated.",
+            "example": false
+          },
+          "hanXinCodeVersion": {
+            "enum": [
+              "Auto",
+              "V01",
+              "V02",
+              "V03",
+              "V04",
+              "V05",
+              "V06",
+              "V07",
+              "V08",
+              "V09",
+              "V10",
+              "V11",
+              "V12",
+              "V13",
+              "V14",
+              "V15",
+              "V16",
+              "V17",
+              "V18",
+              "V19",
+              "V20",
+              "V21",
+              "V22",
+              "V23",
+              "V24",
+              "V25",
+              "V26",
+              "V27",
+              "V28",
+              "V29",
+              "V30",
+              "V31",
+              "V32",
+              "V33",
+              "V34",
+              "V35",
+              "V36",
+              "V37",
+              "V38",
+              "V39",
+              "V40",
+              "V41",
+              "V42",
+              "V43",
+              "V44",
+              "V45",
+              "V46",
+              "V47",
+              "V48",
+              "V49",
+              "V50",
+              "V51",
+              "V52",
+              "V53",
+              "V54",
+              "V55",
+              "V56",
+              "V57",
+              "V58",
+              "V59",
+              "V60",
+              "V61",
+              "V62",
+              "V63",
+              "V64",
+              "V65",
+              "V66",
+              "V67",
+              "V68",
+              "V69",
+              "V70",
+              "V71",
+              "V72",
+              "V73",
+              "V74",
+              "V75",
+              "V76",
+              "V77",
+              "V78",
+              "V79",
+              "V80",
+              "V81",
+              "V82",
+              "V83",
+              "V84"
+            ],
+            "type": "string",
+            "description": "Gets or sets the Han Xin Code Version to use on that symbology.",
+            "example": "Auto"
+          },
+          "hibcFormatHumanReadableText": {
+            "type": "boolean",
+            "description": "Gets or sets whether the Human Readable Text is formatted as specified by HIBC Standards i.e. Zeros are displayed as Slashed-Zeros and the Space character is displayed as an Underscore.",
+            "example": true
+          },
+          "hibcUseIsoIec15434Encoding": {
+            "type": "boolean",
+            "description": "Gets or sets whether the ISO/IEC 15434 Protocol is used to encode the HIBC LIC or PAS Data Structures in 2D symbols.",
+            "example": false
+          },
+          "humanReadableText": {
+            "type": "string",
+            "description": "Gets or sets the Human Readable Text to be displayed instead of the value to encode specified in the `code` property.",
+            "nullable": true,
+            "example": ""
+          },
+          "isbt128DataStructure": {
+            "enum": [
+              "DS001",
+              "DS002",
+              "DS003",
+              "DS004",
+              "DS005",
+              "DS006",
+              "DS007",
+              "DS008",
+              "DS009",
+              "DS010",
+              "DS011",
+              "DS012",
+              "DS013",
+              "DS014",
+              "DS015",
+              "DS016",
+              "DS017",
+              "DS018",
+              "DS019",
+              "DS020",
+              "DS021",
+              "DS022",
+              "DS023",
+              "DS024",
+              "DS025",
+              "DS026",
+              "DS027",
+              "DS028",
+              "DS029",
+              "DS030",
+              "DS031",
+              "DS032",
+              "DS033",
+              "DS034"
+            ],
+            "type": "string",
+            "description": "Gets or sets the ISBT 128 Data Structure to be generated.",
+            "example": "DS001"
+          },
+          "itf14LeftHMark": {
+            "enum": [
+              "None",
+              "Mark1",
+              "Mark2",
+              "Mark3",
+              "Mark4",
+              "Mark5",
+              "Mark6",
+              "Mark7"
+            ],
+            "type": "string",
+            "description": "Gets or sets the H mark type for the left side of ITF-14 barcode symbol.",
+            "example": "None"
+          },
+          "itf14RightHMark": {
+            "enum": [
+              "None",
+              "Mark1",
+              "Mark2",
+              "Mark3",
+              "Mark4",
+              "Mark5",
+              "Mark6",
+              "Mark7"
+            ],
+            "type": "string",
+            "description": "Gets or sets the H mark type for the right side of ITF-14 barcode symbol.",
+            "example": "None"
+          },
+          "jabCodeColors": {
+            "type": "integer",
+            "description": "Gets or sets the number of colors for JAB Code Symbol. The number of colors can be set to 2, 4, 8, 16, 32, 64, 128, or 256.",
+            "format": "int32",
+            "example": 8
+          },
+          "jabCodeModuleSize": {
+            "type": "number",
+            "description": "Gets or sets the module size. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.0417
+          },
+          "jabCodeSymbolCount": {
+            "type": "integer",
+            "description": "Gets or sets the number of JAB Code Symbols to generate. JAB Code can be composed of a master symbol and many slave symbols. 61 is the maximum number of symbols.",
+            "format": "int32",
+            "example": 1
+          },
+          "jabCodeSymbolEccLevel": {
+            "type": "string",
+            "description": "Gets or sets the Error Correction Code Level for each or all of the JAB Code Symbols. Default is an empty string which specifies an ECC Level 5. The Error Correction Code levels range from 0 up to 10. If each JAB Code Symbol (in a master-slaves scenario) requires different ECC Levels, then it must be specified in a comma separated string. E.g. 8,4,5 means ECC Level 8 for master symbol and ECC Level 4 and 5 for first and second slave symbols respectively.",
+            "nullable": true,
+            "example": ""
+          },
+          "jabCodeSymbolPosition": {
+            "type": "string",
+            "description": "Gets or sets the position for each or all of the JAB Code Symbols. Default is an empty string which specifies position 0 (center). JAB Code may have arbitrary forms by cascading master and slave symbols in horizontal and vertical directions. JAB Slave symbols can be docked to the side of a master symbol or other slave symbols. In a master-slaves scenario, each JAB Code Symbol position or location must be specified in a comma separated string stating the Position Indexes (Refer to https://neodynamic.com/barcodes JAB Code page to learn more about Position Indexes). E.g. 0,3,2 means Position Index 0 for master symbol and Position Index 3 and Position Index 2 for first and second slave symbols respectively.",
+            "nullable": true,
+            "example": ""
+          },
+          "jabCodeSymbolVersion": {
+            "type": "string",
+            "description": "Gets or sets the Version (Side size) for each or all of the JAB Code Symbols. Default is an empty string which specifies the minimum size. A JAB Code Symbol can be of either square or rectangle form. JAB Code allows side Versions ranging from Version 1 (25 modules) up to Version 32 (145 modules). To specify a given side Version, a string must be specified in the format WxH where W is the horizonal side Version number and H is the vertical side Version Number. E.g. 4x4 would be a square JAB Symbol Version 4, 4x2 would be a rectangular JAB Symbol Version 4 (horizontal) and Version 2 (vertical). In a master-slaves scenario, if each JAB Code Symbol requires different side Versions, then it must be specified in a comma separated string. E.g. 4x4,4x2 means Version 8 for master symbol and Version 4 by Version 2 for the slave symbol.",
+            "nullable": true,
+            "example": ""
+          },
+          "maxiCodeDrawPixelBasedSymbol": {
+            "type": "boolean",
+            "description": "Gets or sets whether the MaxiCode symbol is drawn by using a Pixel Based method; otherwise, a Vector based method is used.",
+            "example": false
+          },
+          "maxiCodeMode": {
+            "enum": [
+              "Mode2",
+              "Mode3",
+              "Mode4",
+              "Mode5",
+              "Mode6"
+            ],
+            "type": "string",
+            "description": "Gets or sets the MaxiCode mode.",
+            "example": "Mode4"
+          },
+          "maxiCodeProcessTilde": {
+            "type": "boolean",
+            "description": "Gets or sets whether tilde character should be processed when MaxiCode code is being generated.",
+            "example": false
+          },
+          "maxiCodeSymbolCount": {
+            "type": "integer",
+            "description": "Gets or sets the number of MaxiCode symbols in a Structured Appended format. Its value must be less than or equal to 8.",
+            "format": "int32",
+            "example": 1
+          },
+          "maxiCodeSymbolIndex": {
+            "type": "integer",
+            "description": "Gets or sets the Symbol Index for a Structured Appended MaxiCode. Its value must be 1 up to 8 and must be less than the value in `maxiCodeSymbolCount` property.",
+            "format": "int32",
+            "example": 1
+          },
+          "microPdf417Version": {
+            "enum": [
+              "Auto",
+              "V1X11",
+              "V1X14",
+              "V1X17",
+              "V1X20",
+              "V1X24",
+              "V1X28",
+              "V2X8",
+              "V2X11",
+              "V2X14",
+              "V2X17",
+              "V2X20",
+              "V2X23",
+              "V2X26",
+              "V3X6",
+              "V3X8",
+              "V3X10",
+              "V3X12",
+              "V3X15",
+              "V3X20",
+              "V3X26",
+              "V3X32",
+              "V3X38",
+              "V3X44",
+              "V4X4",
+              "V4X6",
+              "V4X8",
+              "V4X10",
+              "V4X12",
+              "V4X15",
+              "V4X20",
+              "V4X26",
+              "V4X32",
+              "V4X38",
+              "V4X44"
+            ],
+            "type": "string",
+            "description": "Gets or sets the MicroPDF417 version (a predefined combinations of numbers of columns and rows) to be generated.",
+            "example": "Auto"
+          },
+          "microQRCodeVersion": {
+            "enum": [
+              "Auto",
+              "M1",
+              "M2",
+              "M3",
+              "M4"
+            ],
+            "type": "string",
+            "description": "Gets or sets the Micro QR Code Version to use on that symbology.",
+            "example": "Auto"
+          },
+          "msiChecksum": {
+            "enum": [
+              "OneMod10",
+              "TwoMod10",
+              "Mod11AndMod10"
+            ],
+            "type": "string",
+            "description": "Gets or sets the checksum mode to be used on MSI symbology.",
+            "example": "OneMod10"
+          },
+          "pdf417AspectRatio": {
+            "type": "number",
+            "description": "Gets or sets the ratio of the height to the overall width of the PDF417 symbol. Its value must be 0 (zero) up to 1 (one).",
+            "format": "double",
+            "example": 0
+          },
+          "pdf417ByteEncodingName": {
+            "type": "string",
+            "description": "Gets or sets the Encoding Name (Code Page) to be used for PDF417 Byte Compaction mode.",
+            "nullable": true,
+            "example": "ISO-8859-1"
+          },
+          "pdf417Columns": {
+            "type": "integer",
+            "description": "Gets or sets the number of columns to use for PDF417 symbology.",
+            "format": "int32",
+            "example": 0
+          },
+          "pdf417CompactionType": {
+            "enum": [
+              "Auto",
+              "Binary",
+              "Text",
+              "Numeric"
+            ],
+            "type": "string",
+            "description": "Gets or sets the Compaction Type to apply for PDF417 symbology.",
+            "example": "Auto"
+          },
+          "pdf417ErrorCorrectionLevel": {
+            "enum": [
+              "Level0",
+              "Level1",
+              "Level2",
+              "Level3",
+              "Level4",
+              "Level5",
+              "Level6",
+              "Level7",
+              "Level8"
+            ],
+            "type": "string",
+            "description": "Gets or sets the Error Correction Level to apply for PDF417 symbology.",
+            "example": "Level2"
+          },
+          "pdf417FileId": {
+            "type": "string",
+            "description": "Gets or sets the File ID of the Macro PDF417 symbol. Its value must be a sequence of codewords (Each codeword value must be a number between 000 and 899) and must be the same for all data segments.",
+            "nullable": true,
+            "example": "000"
+          },
+          "pdf417Rows": {
+            "type": "integer",
+            "description": "Gets or sets the number of rows to use for PDF417 symbology.",
+            "format": "int32",
+            "example": 0
+          },
+          "pdf417SegmentCount": {
+            "type": "integer",
+            "description": "Gets or sets the number of Macro PDF417 symbols. Its value must be less than or equal to 99999.",
+            "format": "int32",
+            "example": 0
+          },
+          "pdf417SegmentIndex": {
+            "type": "integer",
+            "description": "Gets or sets the Segment Index for a Macro PDF417 symbol. Its value must be 0 (zero) up to 99998 and must be less than the value in `pdf417SegmentCount` property.",
+            "format": "int32",
+            "example": 0
+          },
+          "pdf417Truncated": {
+            "type": "boolean",
+            "description": "Gets or sets whether the right side of PDF417 barcode is truncated (removed).",
+            "example": false
+          },
+          "pharmacode2DColorField1": {
+            "type": "string",
+            "description": "Gets or sets the Pharmacode 2D Color Field 1 in hex notation. Default is #5E9C3E (RGB 94, 156, 62).",
+            "nullable": true,
+            "example": "#5E9C3E"
+          },
+          "pharmacode2DColorField2": {
+            "type": "string",
+            "description": "Gets or sets the Pharmacode 2D Color Field 2 in hex notation. Default is #B84027 (RGB 184, 64, 39).",
+            "nullable": true,
+            "example": "#B84027"
+          },
+          "pharmacode2DColorField3": {
+            "type": "string",
+            "description": "Gets or sets the Pharmacode 2D Color Field 3 in hex notation. Default is #497AC3 (RGB 73, 122, 195).",
+            "nullable": true,
+            "example": "#497AC3"
+          },
+          "pharmacode2DColorField4": {
+            "type": "string",
+            "description": "Gets or sets the Pharmacode 2D Color Field 4 in hex notation. Default is #F0EB04 (RGB 240, 235, 4).",
+            "nullable": true,
+            "example": "#F0EB04"
+          },
+          "pharmacode2DColorField5": {
+            "type": "string",
+            "description": "Gets or sets the Pharmacode 2D Color Field 5 in hex notation. Default is #282374 (RGB 40, 35, 116).",
+            "nullable": true,
+            "example": "#282374"
+          },
+          "pharmacode2DColorField6": {
+            "type": "string",
+            "description": "Gets or sets the Pharmacode 2D Color Field 6 in hex notation. Default is #98C2A1 (RGB 152, 194, 161).",
+            "nullable": true,
+            "example": "#98C2A1"
+          },
+          "pharmacode2DColorField7": {
+            "type": "string",
+            "description": "Gets or sets the Pharmacode 2D Color Field 7 in hex notation. Default is #CB801C (RGB 203, 128, 28).",
+            "nullable": true,
+            "example": "#CB801C"
+          },
+          "pharmacode2DColorField8": {
+            "type": "string",
+            "description": "Gets or sets the Pharmacode 2D Color Field 8 in hex notation. Default is #7A2E78 (RGB 122, 46, 120).",
+            "nullable": true,
+            "example": "#7A2E78"
+          },
+          "pharmacode2DColorFields": {
+            "enum": [
+              "None",
+              "Standard",
+              "ExtraColorsVariantA",
+              "ExtraColorsVariantB"
+            ],
+            "type": "string",
+            "description": "Gets or sets the 2D-Pharmacode Color Fields type.",
+            "example": "Standard"
+          },
+          "pharmacode2DTriggerMark": {
+            "enum": [
+              "None",
+              "Left",
+              "Right",
+              "Top",
+              "Bottom"
+            ],
+            "type": "string",
+            "description": "Gets or sets whether to display the 2D-Pharmacode Trigger Mark and its location.",
+            "example": "Left"
+          },
+          "pharmacodeBarsSpacing": {
+            "type": "number",
+            "description": "Gets or sets the gap between Pharmacode bars. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.0417
+          },
+          "pharmacodeThickBarWidth": {
+            "type": "number",
+            "description": "Gets or sets the width of Pharmacode Thick Bars. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.0625
+          },
+          "pharmacodeThinBarWidth": {
+            "type": "number",
+            "description": "Gets or sets the width of Pharmacode Thin Bars. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.0208
+          },
+          "planetHeightShortBar": {
+            "type": "number",
+            "description": "Gets or sets the short bars' height of Planet symbology. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.1
+          },
+          "planetHeightTallBar": {
+            "type": "number",
+            "description": "Gets or sets the tall bars' height of Planet symbology. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.2
+          },
+          "postal4StateAddStartStopChar": {
+            "type": "boolean",
+            "description": "Gets or sets whether start and stop characters must be added and drawn in the barcode image.",
+            "example": true
+          },
+          "postal4StateBarsSpacing": {
+            "type": "number",
+            "description": "Gets or sets the gap spacing between bars. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.0313
+          },
+          "postal4StateTrackerBarHeight": {
+            "type": "number",
+            "description": "Gets or sets the tracker bar's height. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.08
+          },
+          "postal4StateTrackerBarWidth": {
+            "type": "number",
+            "description": "Gets or sets the tracker bar's width. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.0208
+          },
+          "postnetHeightShortBar": {
+            "type": "number",
+            "description": "Gets or sets the short bars' height of Postnet symbology. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.1
+          },
+          "postnetHeightTallBar": {
+            "type": "number",
+            "description": "Gets or sets the tall bars' height of Postnet symbology. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.2
+          },
+          "qrCodeByteEncodingName": {
+            "type": "string",
+            "description": "Gets or sets the Encoding Name (Code Page) to be used for QR Code Byte Compaction mode. Default it ISO-8859-1.",
+            "nullable": true,
+            "example": "ISO-8859-1"
+          },
+          "qrCodeEncoding": {
+            "enum": [
+              "Auto",
+              "Numeric",
+              "AlphaNumeric",
+              "Kanji",
+              "Byte"
+            ],
+            "type": "string",
+            "description": "Gets or sets the QR Code Encoding to use on that symbology.",
+            "example": "Auto"
+          },
+          "qrCodeErrorCorrectionLevel": {
+            "enum": [
+              "L",
+              "M",
+              "Q",
+              "H"
+            ],
+            "type": "string",
+            "description": "Gets or sets the Error Correction Level to apply for QR Code symbology.",
+            "example": "M"
+          },
+          "qrCodeModuleSize": {
+            "type": "number",
+            "description": "Gets or sets the module size. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.0417
+          },
+          "qrCodeProcessTilde": {
+            "type": "boolean",
+            "description": "Gets or sets whether tilde character should be processed when QR Code is being generated.",
+            "example": false
+          },
+          "qrCodeVersion": {
+            "enum": [
+              "Auto",
+              "V01",
+              "V02",
+              "V03",
+              "V04",
+              "V05",
+              "V06",
+              "V07",
+              "V08",
+              "V09",
+              "V10",
+              "V11",
+              "V12",
+              "V13",
+              "V14",
+              "V15",
+              "V16",
+              "V17",
+              "V18",
+              "V19",
+              "V20",
+              "V21",
+              "V22",
+              "V23",
+              "V24",
+              "V25",
+              "V26",
+              "V27",
+              "V28",
+              "V29",
+              "V30",
+              "V31",
+              "V32",
+              "V33",
+              "V34",
+              "V35",
+              "V36",
+              "V37",
+              "V38",
+              "V39",
+              "V40"
+            ],
+            "type": "string",
+            "description": "Gets or sets the QR Code Version to use on that symbology.",
+            "example": "Auto"
+          },
+          "quietZoneWidth": {
+            "type": "number",
+            "description": "Gets or sets the quiet zone's width. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.1
+          },
+          "rotate": {
+            "enum": [
+              "None",
+              "Degree90",
+              "Degree180",
+              "Degree270"
+            ],
+            "type": "string",
+            "description": "Gets or sets the rotation angle to apply on the barcode image.",
+            "example": "None"
+          },
+          "segmentsPerRow": {
+            "type": "integer",
+            "description": "Gets or sets the number of segments per row to be used in GS1 DataBar Expanded Stacked or RSS Expanded Stacked symbologies. It must be an even number ranging from 2 up to 22.",
+            "format": "int32",
+            "example": 4
+          },
+          "snapsToDevicePixels": {
+            "type": "boolean",
+            "description": "Gets or sets a value that determines whether barcode drawing should use device-specific pixel settings during rendering.",
+            "example": false
+          },
+          "telepenEncoding": {
+            "enum": [
+              "Ascii",
+              "Numeric"
+            ],
+            "type": "string",
+            "description": "Gets or sets the Telepen Encoding to use on that symbology.",
+            "example": "Ascii"
+          },
+          "text": {
+            "type": "string",
+            "description": "Gets or sets the additional text to show in the barcode image e.g.: Product ID. Note: This is not the value to encode nor the Human Readable Text.",
+            "nullable": true,
+            "example": ""
+          },
+          "textAlignment": {
+            "enum": [
+              "AboveCenter",
+              "AboveLeft",
+              "AboveRight",
+              "AboveJustify",
+              "BelowCenter",
+              "BelowLeft",
+              "BelowRight",
+              "BelowJustify"
+            ],
+            "type": "string",
+            "description": "Gets or sets the text alignment for `text` property.",
+            "example": "AboveCenter"
+          },
+          "textFontBold": {
+            "type": "boolean",
+            "description": "Gets or sets whether the Font object for `text` property must be bold.",
+            "example": false
+          },
+          "textFontItalic": {
+            "type": "boolean",
+            "description": "Gets or sets whether the Font object for `text` property must be italic.",
+            "example": false
+          },
+          "textFontName": {
+            "type": "string",
+            "description": "Gets or sets the Font name for using when rendering `text` property.",
+            "nullable": true,
+            "example": "Arial"
+          },
+          "textFontSizeInPoints": {
+            "type": "number",
+            "description": "Gets or sets the Font size in points unit (1/72 inch) when rendering `text` property.",
+            "format": "float",
+            "example": 8
+          },
+          "textFontStrikeout": {
+            "type": "boolean",
+            "description": "Gets or sets whether the Font object for `text` property specifies a horizontal line through it.",
+            "example": false
+          },
+          "textFontUnderline": {
+            "type": "boolean",
+            "description": "Gets or sets whether the Font object for `text` property is underlined.",
+            "example": false
+          },
+          "textForeColor": {
+            "type": "string",
+            "description": "Gets or sets the text color for using when rendering `text` property.",
+            "nullable": true,
+            "example": "#000"
+          },
+          "textFormatPattern": {
+            "type": "string",
+            "description": "Gets or sets the string pattern to format the `text` property.",
+            "nullable": true,
+            "example": ""
+          },
+          "tlc39MicroPdf417BarWidth": {
+            "type": "number",
+            "description": "Gets or sets the narrow bar width for TLC39's MicroPdf417 symbol. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.0104
+          },
+          "tlc39MicroPdf417RowBarHeight": {
+            "type": "number",
+            "description": "Gets or sets the row bar height for TLC39's MicroPdf417 symbol. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.03125
+          },
+          "topMargin": {
+            "type": "number",
+            "description": "Gets or sets the height of the margin above the barcode bars. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0
+          },
+          "upcESystem": {
+            "enum": [
+              "System0",
+              "System1"
+            ],
+            "type": "string",
+            "description": "Gets or sets the number system to use for UPC-E symbology.",
+            "example": "System0"
+          },
+          "useQuietZoneForText": {
+            "type": "boolean",
+            "description": "Gets or sets whether quiet zones are used for drawing `text`, `code` and `humanReadableText` properties.",
+            "example": false
+          },
+          "uspsFimPattern": {
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "type": "string",
+            "description": "Gets or sets the USPS FIM pattern to use on that symbology.",
+            "example": "A"
+          },
+          "uspsHorizontalBarsCount": {
+            "type": "integer",
+            "description": "Gets or sets the number of horizontal bars to be drawn.",
+            "format": "int32",
+            "example": 10
+          },
+          "isTextBase64": {
+            "type": "boolean",
+            "description": "Whether the specified text in the `text` or `humanReadableText` properties is in Base64 format. Useful for encoding non-readable/printable chars.",
+            "example": false
+          },
+          "textBase64EncodingName": {
+            "type": "string",
+            "description": "The Encoding or CodePage Identifier/Name of the value to encode in the `text` or `humanReadableText` properties when `isTextBase64` is enabled. Default is ISO-8859-1. Valid values are listed at https://github.com/neodynamic/Barcode-Pro-Web-API-Docker/blob/master/README.md#supported-codepagesencodings",
+            "nullable": true,
+            "example": "ISO-8859-1"
+          },
+          "rightToLeft": {
+            "type": "boolean",
+            "description": "Gets or sets whether the `text` property should draw right-to-left for RTL languages. Default value is false",
+            "example": false
+          },
+          "textPlacement": {
+            "enum": [
+              "Left",
+              "Right",
+              "Top",
+              "Bottom"
+            ],
+            "type": "string",
+            "description": "Gets or sets the text placement for `text` property. Default it Top.",
+            "example": "Top"
+          },
+          "textZoneWidth": {
+            "type": "number",
+            "description": "Gets or sets the width of the zone where the `text` property value will be rendered. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0
+          },
+          "textZoneHeight": {
+            "type": "number",
+            "description": "Gets or sets the height of the zone where the `text` property value will be rendered. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0
+          },
+          "rectMicroQRCodeVersion": {
+            "enum": [
+              "Auto",
+              "R7x43",
+              "R7x59",
+              "R7x77",
+              "R7x99",
+              "R7x139",
+              "R9x43",
+              "R9x59",
+              "R9x77",
+              "R9x99",
+              "R9x139",
+              "R11x27",
+              "R11x43",
+              "R11x59",
+              "R11x77",
+              "R11x99",
+              "R11x139",
+              "R13x27",
+              "R13x43",
+              "R13x59",
+              "R13x77",
+              "R13x99",
+              "R13x139",
+              "R15x43",
+              "R15x59",
+              "R15x77",
+              "R15x99",
+              "R15x139",
+              "R17x43",
+              "R17x59",
+              "R17x77",
+              "R17x99",
+              "R17x139"
+            ],
+            "type": "string",
+            "description": "Gets or sets the Rectangular Micro QR Code Version to use on that symbology.",
+            "example": "Auto"
+          },
+          "quietZoneBottom": {
+            "type": "number",
+            "description": "Gets or sets the bottom quiet zone. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0
+          },
+          "quietZoneLeft": {
+            "type": "number",
+            "description": "Gets or sets the left quiet zone. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.1
+          },
+          "quietZoneRight": {
+            "type": "number",
+            "description": "Gets or sets the right quiet zone. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0.1
+          },
+          "quietZoneTop": {
+            "type": "number",
+            "description": "Gets or sets the top quiet zone. The unit of measure must be specified to `barcodeUnit` property.",
+            "format": "double",
+            "example": 0
+          }
+        },
+        "additionalProperties": false,
+        "description": "It specifies the Barcode settings. Each supported barcode type or symbology requires specific values that can be found at https://neodynamic.com/barcodes"
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "BarcodeGenerator",
+      "description": "The BarcodePro Generator Web API."
+    }
+  ]
+}

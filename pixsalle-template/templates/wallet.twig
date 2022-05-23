@@ -1,0 +1,26 @@
+{% set page = 'wallet' %}
+{% extends "base.twig" %}
+{% block title %}Wallet{% endblock %}
+
+{% block content %}
+<div class="content">
+<body class="body-landing-page">
+
+<div style="padding-left:15px">
+    <h2>Welcome to the Wallet</h2>
+    <div class="current-balance-div">
+    <img class="wallet" src="/assets/uploads/wallet.png"></img>
+    <p>Current balance</p>
+    <p class="current-balance">{{ current_balance }}€</p>
+    </div>
+    <h3>Actions</h3>
+    <p class="hero-paragraph">Insert the amount of money that you want to add to the wallet.</p>
+    <form class="wallet-form" data-cy="wallet" action="{{ formAction }}" method="POST">
+        <div class="amount"><input class="amount" type="text" data-cy="amount" name="amount" value="0"></input></div> 
+        <div class="save"><a href="logout"><input class="signin-signup-input" data-cy="goto-sign-up__btn" type="SUBMIT" value="Add to wallet"></input></a></div> 
+    </form>
+</div>
+
+</body>
+</div>
+{% endblock %}

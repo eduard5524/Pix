@@ -1,0 +1,71 @@
+{% set page = 'album' %}
+{% extends "base.twig" %}
+{% block title %}Album{% endblock %}
+
+{% block content %}
+    <div class="w3-row-padding">
+        <div class="w3-third w3-container w3-margin-bottom">
+            <div class="w3-container w3-white">
+                <div class="album-container">
+                <p class="album-name"><b>{{ album_name }}</b></p>
+                    <div>
+                        <form action="{{ formActionAlbum }}" method="POST" enctype="multipart/form-data">
+                            <input id="choose-file" name="choose-file" class="choose-file" type="text"></input>
+                            <input id="album_id" name="album_id" class="album_id" value="{{ album_id }}" type="hidden"></input>
+                            <input name="upload" id="upload" class="upload" type="SUBMIT" value="Upload Photo"></input>
+                        </form>
+                        
+                        {# Barcode QR Generation. #}
+                        {% if qr_code == 'false' %}
+                            <form action="{{ formActionAlbum  }}" method="POST" enctype="multipart/form-data">
+                                <input id="album_id" name="album_id" type="hidden" value="{{ album_id }}"></input>
+                                <input id="upload" name="upload" class="upload" value="Generate QR Barcode" type="SUBMIT"></input>
+                            </form>
+                        {% else %}
+                            <a href="{{ qr_code }}" download>
+                                <input id="upload" name="upload" class="upload" value="Download QR Barcode" type="Button"></input>
+                            </a>
+                            <div><img src="{{ qr_code }}" style="height: 80px;margin: 5px;"></img></div>
+                        {% endif %}
+
+                    </div>
+                
+                </div>
+                <div class="album-containers">
+                {% for photo in photos %}
+                    <div class="album-item-div">
+                        <img class="album-photo" src={{ photo['src'] }} ></img>
+                        <div class="footer-picture-album"> 
+                            <p>Photo ID {{ photo['id'] }}</p>
+                            {# Link to delete an Album Photo. #}
+                            <div class="buttons-container">
+                            <input class="delete-album-button" value="Delete" id="delete-album-{{ photo['id'] }}" type="button"></input>
+                            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+                            <script language="JavaScript">                            
+                                var newHandle = function(event) { 
+                                    return function(event){
+                                        const Http = new XMLHttpRequest();
+                                        const url='http://localhost:8030/portfolio/album/{{ photo['id'] }}';
+                                        Http.open("DELETE", url);
+                                        Http.send();
+                                        Http.onreadystatechange = (e) => {
+                                        console.log(Http.responseText)  
+                                    }
+                                    //event.preventDefault()
+                                    event.stopImmediatePropagation();
+                                    alert('Are you sure you want to proceed to delete the photo {{ album['id'] }}?');
+                                    location.reload();
+                                    return null;
+                                }
+                                };
+                                document.getElementById("delete-album-{{ photo['id'] }}").addEventListener("click", newHandle(), false);                   
+                            </script>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

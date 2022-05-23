@@ -1,0 +1,100 @@
+{% set page = 'portfolio' %}
+{% extends "base.twig" %}
+{% block title %}Portfolio{% endblock %}
+
+{% block content %}
+<div class="content">
+<body class="body-landing-page">
+  <div class="portfolio-container">
+    {# Lateral bar #}
+    <nav class="portfolio-nav" style="z-index:3;margin-top:0px;" id="mySidebar"><br>
+      <div class="w3-container">
+        <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
+          <i class="fa fa-remove"></i>
+        </a>
+        <img src="/assets/uploads/wallet.png" style="width:45%;" class="w3-round"><br><br>
+      </div>
+
+      {# In case that a Portfolio Title doesn't exists. #}
+      {% if portfolio['created'] == false %}
+      {# The user needs to be an Active membership to add a Portfolio. #}
+      <form action="{{ formAction }}" method="POST" enctype="multipart/form-data">
+        <div class="bar-block">
+          <p class="item-bar">Create a new portfolio</p> 
+          <input class="portfolio-title" id="portfolio-title" name="portfolio-title" type="text"></input>
+          <div class="save"><input class="create-new-portfolio-input" type="SUBMIT" value="Save"></input></div>
+        </div>
+      </form>
+      {% else %}
+      {# In case the portfolio exists the following function will show the title. #}
+      <div class="bar-block">
+        <p class="item-bar">{{ portfolio['portfolio-title'] }}</p>
+      </div>
+      {% endif %}
+      {# In case that portfolio already exists #}
+    </nav>
+    
+    <div class="portfolio-content">
+      {# Page Content #}      
+      <header id="portfolio">
+        <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey"><i class="fa fa-bars"></i></span>
+        <div>
+          <h1><b>My Portfolio</b></h1>
+          <div class="portfolio-container">
+          {# Create an Album #}
+          {% if portfolio['created'] == true and membership == "Active" %}         
+          <form action="{{ formAction }}" method="POST" enctype="multipart/form-data">
+              <input class="newalbum" type="text" id="album-title" name="album-title"></input>
+              <input class="savenewalbum" value="Save" type="SUBMIT"></input>
+          </form>
+          {% endif %}
+          
+          {# Filters #}
+          <div class="w3-section w3-bottombar w3-padding-16">
+            <span class="filter-span">Filter:</span> 
+            <button class="save-input">ALL</button>
+          </div>
+          </div>
+        </div>
+      </header>
+
+      {# Album Covers #}
+      {% if portfolio['created'] == true %}
+      <div class="w3-row-padding">
+        <div class="w3-third w3-container w3-margin-bottom">
+          <div class="w3-container w3-white">
+            <p><b>Album Covers</b></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="album-cover-section">
+      {# Single Album Cover #}
+      {% for album in albums %}
+      <div class="grid-item">
+      <form action="{{ formAction }}" method="POST" enctype="multipart/form-data">
+      <section>
+          <div class="card-img">
+              <div class="element-explore">
+                  <img class="explore-image" src="assets/uploads/album-cover.png" alt=""></img>
+                  <a class="p-item-explore" type="SUBMIT" name="album-id" href="/portfolio/album/{{ album['id'] }}" >{{ album['name'] }}</a>
+                  {% if membership == "Active" %}
+                  <form action="{{ formActionAlbum  }}" method="POST" enctype="multipart/form-data">
+                      <input id="album-to-delete" name="album-to-delete" class="upload" value="{{ album['id'] }}" type="hidden"></input>
+                      <input id="upload" name="upload" class="upload" value="Delete Album" type="SUBMIT"></input>
+                  </form>
+                  {% endif %}
+              </div>
+          </div>
+      </section>
+      </form>
+      </div>
+      {% endfor %}
+      </div>
+
+     {% else %}
+     <p class="advice-portfolio">WARNING: You need to create a portfolio before of creating Albums.</p>
+     {% endif %}
+  </body>
+</div>
+{% endblock %}

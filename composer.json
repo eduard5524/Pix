@@ -1,0 +1,6 @@
+{
+    "require": {
+        "slim/flash": "^0.4.0",
+        "bryanjhv/slim-session": "~4.0"
+    }
+}

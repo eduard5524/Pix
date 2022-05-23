@@ -1,0 +1,43 @@
+{% set page = 'profile' %}
+{% extends "base.twig" %}
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<div class="content">
+    <body class="body-landing-page">
+        <div style="padding-left:15px">
+            <h2>User Profile</h2>
+
+            {# Change User Profile Picture #}
+            <form action="{{ formAction }}" method="POST" enctype="multipart/form-data">
+                <label>
+                    <img class="user-profile-image" src="{{ pathUserProfilePicture }}"  width="80" height="80"></img>
+                    <input id="user-profile-image" name="user-profile-image" class="user-profile-image-hidden" type="file"></input>
+                </label>
+                </br>
+                </br>
+                <input name="save-profile-picture" class="element-in" value="Save" type="SUBMIT"></input>
+            
+            {# Update the User Profile #}
+                <h3>Information</h3>
+                <p class="hero-paragraph">This is the user profile page of the application.</p>
+                <p class="hero-paragraph">Username ID</p>
+                <div class="save"><input disabled value={{ session['user_id'] }}></input></div>
+                <p class="hero-paragraph">Username</p>
+                <div class="save"><input class="username" type="text" data-cy="username" id="username" name="username" value={{ session['username'] }}></input></div>
+                <p class="hero-paragraph">Email</p>
+                <div class="save"><input class="email" type="text" data-cy="email" id="email-form" name="email" disabled value={{ session['email'] }}></input></div>
+                    <p class="hero-paragraph">Phone</p>
+                    <div class="save"><input class="phone" type="text" data-cy="phone" id="phone" name="phone" value={{ session['phone'] }}></input></div>
+                        <div class="save"><input class="element-in" value="Save" type="SUBMIT"></input></div>
+            </form>
+
+            <h3>Actions</h3>
+            <p class="hero-paragraph">If you want to change your current password please click the following button.</p>
+            <div class="changepassword"><a href="/profile/changepassword"><input class="signin-signup-input" data-cy="goto-sign-up__btn" type="button" value="Change Password"></input></a></div>
+                <p class="hero-paragraph">To logout the user application click the following button.</p>
+            <div class="logout"><a href="logout"><input class="signin-signup-input" data-cy="goto-sign-up__btn" type="button" value="Logout"></input></a></div>       
+        </div>
+    </body>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% set page = 'memberships' %}
+{% extends "base.twig" %}
+
+{% block title %}Memberships{% endblock %}
+
+{% block content %}
+{# Current membership #}
+<div class="content">
+  <body class="body-landing-page">
+    <div style="padding-left:15px">
+      <h2>Memberships</h2>
+      <p class="hero-paragraph">Current membership plan.</p>
+      <div class="membership-containers">
+        <div class="columns">
+          <ul class="price">
+            <li class="header-membership" style="background-color:#04AA6D">{{ current_membership }}</li>
+            {% if current_membership == 'Cool' %}
+            <li class="footer-membership">$ Free plan</li>
+            {% endif %}
+            {% if current_membership == 'Active' %}
+            <li class="footer-membership">$ Full access</li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    {# Update Membership #}
+    <form action="{{ formAction }}" method="POST" enctype="multipart/form-data">
+      <div style="padding-left:15px">
+        <h2>Update your membership plan</h2>
+        <div class="membership-plans">
+          <div class="columns">
+            <ul class="price">
+              <li class="header-membership-grey">Cool</li>
+              <li class="grey">$ Free plan</li>
+              <li class="footer-membership"><input type="radio" href="#" class="select-membership" id="Cool" value="Cool" name="Plan" checked></input></li>
+            </ul>
+          </div>
+          
+          <div class="columns">
+            <ul class="price">
+              <li class="header-membership-grey">Active</li>
+              <li class="grey">$ Full access</li>
+              <li class="footer-membership"><input type="radio" href="#" class="select-membership" id="Active" value="Active" name="Plan"></input></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="save"><input class="save-input" type="SUBMIT" value="Save"></input></div>
+    </body>
+  </div>
+</form>
+{% endblock %}

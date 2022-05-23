@@ -1,0 +1,36 @@
+{% set page = 'blogs' %}
+{% extends "base.twig" %}
+{% block title %}Blogs{% endblock %}
+
+{% block content %}
+<div class="content">
+<body class="body-landing-page">
+    <div style="padding-left:15px">
+        {% if blog['id'] == false %}
+        <h1>Blogs</h1>
+        <div class="leftcolumn">
+                {% for blog in blogs %}
+                    {# Blog Entry #}
+                    <div id="blog-list" class="card">
+                        <h5>Blog ID {{ blog['id'] }}</h5>
+                        <form action="{{ formAction }}" method="POST" enctype="multipart/form-data">
+                            <a class="p-item-explore" type="SUBMIT" name="album-id" href="/blog/{{ blog['id'] }}" type="Button">Blog {{ blog['title'] }}</a>
+                        </form> 
+                    </div>
+                {% endfor %}
+            {% else %}
+            <div>
+                <h1>Blog ID {{ blog['id'] }}</h1>
+                <div id="blog-entry">
+                    <h3>Title</h3>
+                    {{ blog['title'] }}
+                    <h3>Content</h3>
+                    <p>{{ blog['content'] }}</p>
+                    <p>User ID {{ blog['userID'] }}
+                </div>
+            </div>
+            {% endif %}
+      </div>
+    </body>
+</div>
+{% endblock %}

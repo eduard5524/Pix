@@ -1,0 +1,27 @@
+{% set page = 'explore' %}
+{% extends "base.twig" %}
+{% block title %}Wallet{% endblock %}
+
+{% block content %}
+<div class="content">
+    <body class="body-landing-page">
+        <div style="padding-left:15px">
+            <h2>Explore</h2>
+            <p>This section showcases all the pictures available in the system (from all users).</p>
+            {# Album picture #}
+            <section>
+                <div class="album-containers"> 
+                    {% for picture in pictures %}
+                        <div class="album-item-div">
+                        <img class="explore-image" src={{ picture['pictures'] }} alt="">
+                        <p class="p-item-explore">Photo ID {{ picture['id'] }}</p>
+                        <p class="p-item-explore">Author {{ picture['author'] }}</p>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
+</div>
+{% endblock %}

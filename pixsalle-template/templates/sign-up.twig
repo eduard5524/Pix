@@ -1,0 +1,23 @@
+{% set page = 'sign-up' %}
+{% extends "base.twig" %}
+
+{% block title %}Sign-up | PixSalle{% endblock %}
+
+{% block content %}
+<div class="content">
+<body class="bodysign">
+  <form class="signin-signup-form" data-cy="sign-up" action="{{ formAction }}" method="POST">
+    <input class="signin-signup-input" data-cy="sign-up__email" type="text" name="email" placeholder="Enter your email">
+    <input class="signin-signup-input" class="signin-signup-errors" data-cy="sign-up__password" type="password" name="password" placeholder="Enter your password">
+    <input class="signin-signup-input" data-cy="sign-up__btn" type="submit" value="Sign-up">
+    {% if formErrors['email'] %}
+    <p class="signin-signup-errors" data-cy="sign-up__wrongEmail">{{ formErrors['email'] }}</p>
+    {% endif %}
+    {% if formErrors['password'] %}
+    <p class="signin-signup-errors" data-cy="sign-up__wrongPassword">{{ formErrors['password'] }}</p>
+    {% endif %}
+  </form>
+  <div class="signin-signup-goto"><a href="sign-in"><input class="signin-signup-input" data-cy="goto-sign-in__btn" type="button" value="Go to Sign In"></input></a></div>
+</body>
+</div>
+{% endblock %}

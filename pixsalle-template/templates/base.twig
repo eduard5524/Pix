@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html lang="en">
+{# 1. Head, this contains the title and the meta information. #}
+  <head>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"></meta>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"></meta>
+    <title>
+      {% block title %}{% endblock %}
+    </title>
+    <link rel="icon" type="image/x-icon" href="/assets/uploads/logo.ico"></link>
+  </head>
+{#2. Styles, this is where you will load all the required CSS and/or other styles. #}
+    <link rel="stylesheet" href="/assets/css/styles.css"/></link>
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600" rel="stylesheet"></link>
+    <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+    
+{# 3. header, this contains the navigation menu. The navigation menu must contain buttons to log in and sign up, and if the user
+    is logged in, **links to other features of the application (profile, portfolio, ...). #}
+  <header>
+    {% block head %}
+    {# Top Navigation #}
+    {% if page == 'sign-up' %}
+    <nav>
+      <div class="topnav-container">
+      <div class="topnav">
+      <a href="/"><img class="logo" src="/assets/uploads/logo.png" alt="Logo" width="40" height="40"></a>
+      <div><h1 class="signin-signup-h1">Sign up here!</h1></div>
+      </div>
+      </div>
+    </nav>
+    {% elseif page == 'sign-in' %}
+    <nav>
+      <div class="topnav-container">
+      <div class="topnav">
+      <a href="/"><img class="logo" src="/assets/uploads/logo.png" alt="Logo" width="40" height="40"></a>
+      <h1 class="signin-signup-h1">Welcome to PixSalle Sign In Page</h1>
+      </div></div>
+    </nav>
+    {% else %}
+    <nav>
+    <div class="topnav-container">
+      <div class="topnav">
+        <a href="/"><img class="logo" src="/assets/uploads/logo.png" alt="Logo" width="40" height="40"></a>
+        {% if session['user_id'] is not empty %}
+        <a href="/profile"><p class="p-nav">Profile</p></a>
+        <a href="/user/wallet"><p class="p-nav">Wallet</p></a>
+        <a href="/user/membership"><p class="p-nav">Memberships</p></a>
+        <a href="/explore"><p class="p-nav">Explore</p></a>
+        <a href="/portfolio"><p class="p-nav">Portfolio</p></a>
+        <a href="/blog"><p class="p-nav">Blogs</p></a>
+        {% endif %}
+      </div>
+      <div class="topnav-signin-signup">
+        {% if session['user_id'] is not empty %}
+        <a href="/logout"><p class="p-nav">Logout</p></a>
+        <a href="/profile"><img class="profile" href="profile" src="/assets/uploads/user.jpg" alt="UserProfile" width="25" height="25"></a>
+        {% else %}
+        <a href="/sign-up"><p class="p-nav">Sign up</p></a>
+        <a href="/sign-in"><img class="logo" href="sign-in" src="/assets/uploads/user.jpg" alt="Sign In" width="25" height="25"></a>
+        {% endif %}
+      </div>
+    </div>
+    </nav>
+    {% endif %}
+  {% endblock %}
+  </header>
+{# 4. content, this is the main body of the webpage, depending on the feature being shown. #}
+  <body>
+    <main>
+    {% block content %}{% endblock %}</main>
+    {# Notifications #}
+    {% if notifications is not empty %}
+    <ol class="notification">
+        {% for notification in notifications %}
+            {% if page == 'profile' %}
+            <h3>Errors</h3>
+            {% endif %}
+            <li class="notification">{{ notification }}</li>
+            {% if page == 'sign-in' or page == 'sign-up' %}
+            <script>
+                var notification = '{{ notification }}';
+                  alert(notification);
+            </script>
+            {% endif %} 
+        {% endfor %}
+    </ol>
+    {% endif %}
+  </body>
+{# 5. footer, typically, this contains a copyright notice. #}
+    <footer> 
+      <div class="footer-div">
+        <p class="footer-p">Copyright © La Salle 2022</p>
+        <a class="footer-p" href="mailto:eduard.lecha@students.salle.url.edu"> eduard.lecha@students.salle.url.edu</a>
+      </div>
+    </footer>
+</html>
